@@ -14,10 +14,11 @@ RUN sed -i.bak "/^#.*deb-src.*universe$/s/^# //g" /etc/apt/sources.list \
     && echo "deb https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" >> /etc/apt/sources.list \
     && wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc \
     && apt update \
-    && apt -y install subversion \
-    && apt -y build-dep r-base-dev \
+    && apt -y install subversion
+
+RUN apt -y build-dep r-base-dev \
     && apt -y install r-base-dev
-    
+
 RUN Rscript -e "install.packages('languageserver', repos='https://cran.rstudio.com')" \
     && Rscript -e "install.packages('httpgd', repos='https://cran.rstudio.com')"
 
