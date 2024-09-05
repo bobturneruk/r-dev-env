@@ -16,14 +16,18 @@ RUN sed -i.bak "/^#.*deb-src.*universe$/s/^# //g" /etc/apt/sources.list \
     && apt update \
     && apt -y install subversion
 
-RUN apt -y build-dep r-base-dev \
-    && apt -y install r-base-dev
+RUN apt -y install pkgconf
 
-RUN Rscript -e "install.packages('languageserver', repos='https://cran.rstudio.com')" \
-    && Rscript -e "install.packages('httpgd', repos='https://cran.rstudio.com')"
+RUN apt -y install r-base-core
 
-RUN apt install shellcheck
-RUN apt install -y ccache
+#RUN apt -y build-dep r-base-dev \
+#    && apt -y install r-base-dev
+
+#RUN Rscript -e "install.packages('languageserver', repos='https://cran.rstudio.com')" \
+#    && Rscript -e "install.packages('httpgd', repos='https://cran.rstudio.com')"
+
+#RUN apt install shellcheck
+#RUN apt install -y ccache
 #RUN /usr/sbin/update-ccache-symlinks
 #RUN echo 'export PATH="/usr/lib/ccache:$PATH"' | tee -a /home/vscode/.bashrc
 
