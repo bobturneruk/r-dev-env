@@ -54,6 +54,10 @@ jobs:
             type=semver,pattern={{ env.VERSION }}
             type=sha
 
+      - name: Build ARM docker image via bash
+        run: |
+          docker buildx build --platform linux/arm64 -t ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:arm_test --build-arg CONTAINER_VERSION=${{ env.VERSION }} .
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -64,7 +68,6 @@ jobs:
             CONTAINER_VERSION=${{ env.VERSION }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64
-
 
       - name: Build and push ARM based Docker image
         uses: docker/build-push-action@v5
