@@ -14,20 +14,24 @@ RUN sed -i.bak "/^#.*deb-src.*universe$/s/^# //g" /etc/apt/sources.list \
     && echo "deb https://cloud.r-project.org/bin/linux/ubuntu jammy-cran40/" >> /etc/apt/sources.list \
     && wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | sudo tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc \
     && apt update \
-    && apt -y install subversion \
-    && apt -y build-dep r-base-dev \
-    && apt -y install r-base-dev \
-    && Rscript -e "install.packages('languageserver', repos='https://cran.rstudio.com')" \
-    && Rscript -e "install.packages('httpgd', repos='https://cran.rstudio.com')"
+    && apt -y install subversion
 
-RUN apt install shellcheck
-RUN apt install -y ccache
+RUN apt -y install pkgconf
+
+RUN apt -y install r-base-core
+
+#RUN apt -y build-dep r-base-dev \
+#    && apt -y install r-base-dev
+
+#RUN Rscript -e "install.packages('languageserver', repos='https://cran.rstudio.com')" \
+#    && Rscript -e "install.packages('httpgd', repos='https://cran.rstudio.com')"
+
+#RUN apt install shellcheck
+#RUN apt install -y ccache
 #RUN /usr/sbin/update-ccache-symlinks
 #RUN echo 'export PATH="/usr/lib/ccache:$PATH"' | tee -a /home/vscode/.bashrc
 
 
-ENV BUILDDIR="/workspaces/r-dev-env/build/r-devel"
-ENV TOP_SRCDIR="/workspaces/r-dev-env/svn/r-devel"
-ENV PATCHDIR='/workspaces/r-dev-env/patches'
+
 ARG CONTAINER_VERSION
 ENV CONTAINER_VERSION ${CONTAINER_VERSION}
