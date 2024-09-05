@@ -16,8 +16,9 @@ RUN sed -i.bak "/^#.*deb-src.*universe$/s/^# //g" /etc/apt/sources.list \
     && apt update \
     && apt -y install subversion \
     && apt -y build-dep r-base-dev \
-    && apt -y install r-base-dev \
-    && Rscript -e "install.packages('languageserver', repos='https://cran.rstudio.com')" \
+    && apt -y install r-base-dev
+    
+RUN Rscript -e "install.packages('languageserver', repos='https://cran.rstudio.com')" \
     && Rscript -e "install.packages('httpgd', repos='https://cran.rstudio.com')"
 
 RUN apt install shellcheck
