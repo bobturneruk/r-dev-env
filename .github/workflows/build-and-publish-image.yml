@@ -8,22 +8,14 @@ name: Build and publish Docker image
 on:
   workflow_dispatch:
   pull_request:
-    branches: ["main","devel"]
-    types: [closed]
-    paths:
-      - '.github/workflows/build-and-publish-image.yml'
-      - 'Dockerfile'
-      - 'reinstall-cmake.sh'
-      - 'VERSION'
   
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: startrooper08/r-dev-env
+  IMAGE_NAME: bobturneruk/r-dev-env
 
 jobs:
   build-and-push-image:
-    if: ${{github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true}}
     runs-on: ubuntu-latest
     permissions:
       contents: read
